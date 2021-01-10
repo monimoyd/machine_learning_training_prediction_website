@@ -156,8 +156,24 @@ path as input
 iii. /predict_image_classification: This API is used for performing training image classification. It takes dataset name 
 path as input
 
+# VI. Machine Learning Models used
 
-# VI. Limitation and Future Enhancements
+For image classification, I have used the follwing
+- Transfer learning by using pretrained Mobilenet. 
+- Learning Rate: 0.01 momentum: 0.9 with SGD optimizer
+- StepLR is used with step size: 6 and gamma: 0.1
+- Epochs: 10
+
+
+For sentiment Analysis, I have used following:
+
+- LSTM Model
+- Adam as optimizer
+- Learning Rate: 2e-4
+- Epochs: 10
+
+
+# VII. Limitation and Future Enhancements
 
 There are a few limitations for the application:
 
@@ -173,8 +189,7 @@ Future enhancements:
 
 
 
-
-# VII. Conclusion
+# VIII. Conclusion
 
 In this project I have implemented a website from scratch for uploading, training, predicting Machine Learning Datasets. I 
 have used various AWS services (EC2, Lamda, S3, DynamoDB). It was a very good learning opportunity
