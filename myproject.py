@@ -19,9 +19,9 @@ app = Flask(__name__)
 app.secret_key = "secret key"
 from flask import jsonify, make_response
 
-AWS_ACCCESS_KEY='AKIAQMLZ23B6KCIYGGFC'
-AWS_SECRET_KEY='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'
-BUCKET_NAME = 'image-uploads-2222'
+AWS_ACCCESS_KEY=<AWS ACCESS KEY>
+AWS_SECRET_KEY=<AWS SECRET KEY>
+BUCKET_NAME = <BUCKET NAME>
 
 
 
@@ -195,13 +195,12 @@ def predict_image_classification():
 
 
 def get_dataset(dataset_name, dataset_type, dynamodb=None):
-    AWS_ACCCESS_KEY='AKIAQMLZ23B6KCIYGGFC'
-    AWS_SECRET_KEY='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'
+    AWS_SECRET_KEY=AWS_SECRET_KEY
     BUCKET_NAME = 'image-uploads-2222'
 
     if not dynamodb:
-        dynamodb = boto3.resource('dynamodb',  region_name='ap-south-1', aws_access_key_id='AKIAQMLZ23B6KCIYGGFC', 
-         aws_secret_access_key= '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')
+        dynamodb = boto3.resource('dynamodb',  region_name='ap-south-1', aws_access_key_id=AWS_ACCESS_KEY, 
+         aws_secret_access_key= AWS_SECRET_KEY)
 
     table = dynamodb.Table('Dataset')
 
@@ -259,21 +258,15 @@ def perform_train_image_classification(dataset_obj):
     print("perform_train_image_classification: save_dataset done")
 
 def download_s3_file(dataset_path, local_path): 
-    AWS_ACCCESS_KEY = 'AKIAQMLZ23B6KCIYGGFC'
-    AWS_SECRET_KEY = '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'
-    BUCKET_NAME = 'image-uploads-2222'
-    s3 = boto3.resource('s3', aws_access_key_id = 'AKIAQMLZ23B6KCIYGGFC', aws_secret_access_key = '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')
+    s3 = boto3.resource('s3', aws_access_key_id = AWS_ACCESS_KEY, aws_secret_access_key = AWS_SECRET_KEY)
     #s3 = boto3.client('s3')
 	
-    bucket = s3.Bucket('image-uploads-2222')
+    bucket = s3.Bucket(BUCKET_NAME)
     bucket.download_file( dataset_path, local_path )
 
 
 def save_dataset(dataset_obj, result_dict):
-    AWS_ACCCESS_KEY='AKIAQMLZ23B6KCIYGGFC'
-    AWS_SECRET_KEY='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'
-    BUCKET_NAME = 'image-uploads-2222'
-    dynamodb = boto3.resource('dynamodb', region_name='ap-south-1', aws_access_key_id='AKIAQMLZ23B6KCIYGGFC', aws_secret_access_key='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')
+    dynamodb = boto3.resource('dynamodb', region_name='ap-south-1', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
 
     table = dynamodb.Table('Dataset')
     if result_dict['training_status'] == 'Training Successful':
@@ -332,15 +325,12 @@ def save_dataset(dataset_obj, result_dict):
 
 
 def upload_s3(local_file_path, bucket_name, s3_file):
-    AWS_ACCCESS_KEY='AKIAQMLZ23B6KCIYGGFC'
-    AWS_SECRET_KEY='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'
-    BUCKET_NAME = 'image-uploads-2222'
 
     session = boto3.Session(
-    aws_access_key_id='AKIAQMLZ23B6KCIYGGFC',
-    aws_secret_access_key='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')
+    aws_access_key_id=AWS_ACCESS_KEY,
+    aws_secret_access_key=AWS_SECRET_KEY)
     s3 = session.resource('s3')
-    s3.meta.client.upload_file(Filename=local_file_path, Bucket='image-uploads-2222', Key=s3_file)
+    s3.meta.client.upload_file(Filename=local_file_path, Bucket=BUCKET_NAME, Key=s3_file)
 
 
 
